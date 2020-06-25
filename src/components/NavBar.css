@@ -1,0 +1,84 @@
+.nav_card .card {
+    background: white;
+    width: 100%;
+    display: block;
+    position: fixed;
+    z-index: 2;
+}
+
+nav {
+    background: transparent;
+    width: 100%;
+    display: flex;
+    min-height: 8vh;
+    justify-content: space-around;
+    line-height: 40px;
+    width: 100%;
+    color: teal;
+}
+
+.nav_logo {
+    line-height: 40px;
+    align-items: center;
+    display: flex;
+}
+
+.nav_logo img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+}
+
+.nav_logo a {
+    line-height: 40px;
+    text-decoration: none;
+    font: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: 10px;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    border: none;
+    outline: none;
+}
+
+.navigation_body ul {
+    list-style: none;
+    width: 100%;
+    display: flex;
+}
+
+.navigation_body ul li {
+    float: left;
+    list-style: none;
+    width: 150px;
+    height: 40px;
+    line-height: 8vh;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: space-around;
+}
+
+.navigation_body ul li a {
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    border: none;
+    outline: none;
+}
+
+.navigation_body ul li a:hover {
+    color: #4facfe;
+    /*border-bottom: red; */
+}
+
+@media screen and (max-width: 990px) {
+    .navigation_body ul {
+        display: none;
+    }
+}

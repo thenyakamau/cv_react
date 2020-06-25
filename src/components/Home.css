@@ -1,0 +1,144 @@
+.home_layout {
+    min-height: 100vh;
+    background: white;
+}
+
+.my_canvas {
+    height: 70vh;
+}
+
+.overlay {
+    /* background: #0000008a; */
+    width: 100%;
+    height: 70vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.canvas_background {
+    width: 100%;
+    height: 100%;
+    background: url("/assets/icons/2860933.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.canvas_background .card {
+    width: 100%;
+    margin-top: 120px;
+    background: transparent;
+    color: black;
+    text-transform: capitalize;
+    top: 30vh;
+    z-index: 3;
+    outline: none;
+    border: none;
+}
+
+.description_layout {
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.description_layout_container {
+    display: flex;
+}
+
+.single_feature {
+    flex: 1;
+    margin-left: 50px;
+}
+
+.single_feature p {
+    color: #7f7f7f;
+    line-height: 1.8;
+    font-size: 15px;
+    text-align: center;
+}
+
+.call_layout {
+    margin-top: 70px;
+    margin-left: 200px;
+    margin-right: 200px;
+    display: flex;
+}
+
+.about_us_text {
+    flex: 1;
+}
+
+.about_us_text img {
+    margin-bottom: 10px;
+}
+
+.about_us_text h2 {
+    font-size: 45px;
+    font-weight: 500;
+    line-height: 55px;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.about_us_text p {
+    line-height: 36px;
+    margin-bottom: 57px;
+    font-family: "Quicksand", sans-serif;
+    line-height: 28px;
+    font-size: 16px;
+    margin-bottom: 0px;
+    color: #888888;
+    font-weight: 400;
+    max-width: 500px;
+}
+
+.about_us_text .btn_2 {
+    margin-top: 30px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 44px;
+    border-radius: 50px;
+    background-color: #005073;
+    font-size: 15px;
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    text-transform: uppercase;
+    border: 2px solid #005073;
+}
+
+.about_us_text .btn_2:hover {
+    background-color: white;
+    color: #005073;
+}
+
+.call_image {
+    flex: 1;
+    margin-left: 50px;
+}
+
+@media screen and (max-width: 1200px) {
+    .call_layout {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .description_layout_container {
+        display: block;
+    }
+    .description_layout {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .call_layout {
+        display: block;
+    }
+}
