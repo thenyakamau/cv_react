@@ -17,7 +17,7 @@ export default class NavBar extends Component {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="assets/utils/james cv.docx" download>
+                  <a href="assets/utils/thenya cv.docx" download>
                     Download Cv
                   </a>
                 </li>
