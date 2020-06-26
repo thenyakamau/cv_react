@@ -1,4 +1,4 @@
-.nav_card .card {
+.nav_card {
     background: white;
     width: 100%;
     display: block;
@@ -17,8 +17,18 @@ nav {
     color: teal;
 }
 
+nav a {
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    border: none;
+    outline: none;
+    color: teal;
+}
+
 .nav_logo {
-    line-height: 40px;
+    line-height: 8vh;
     align-items: center;
     display: flex;
 }
@@ -54,13 +64,14 @@ nav {
 .navigation_body ul li {
     float: left;
     list-style: none;
-    width: 150px;
+    margin-right: 100px;
     height: 40px;
     line-height: 8vh;
     align-items: center;
     font-size: 20px;
     font-weight: bold;
     justify-content: space-around;
+    color: teal;
 }
 
 .navigation_body ul li a {
@@ -70,11 +81,11 @@ nav {
     -webkit-transition: all 0.2s ease-in-out;
     border: none;
     outline: none;
+    color: teal;
 }
 
 .navigation_body ul li a:hover {
     color: #4facfe;
-    /*border-bottom: red; */
 }
 
 @media screen and (max-width: 990px) {

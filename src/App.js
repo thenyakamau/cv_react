@@ -1,18 +1,22 @@
-import React from 'react';
-import './App.css';
-import NavBar from './components/NavBar';
-import { Switch, Route } from 'react-router-dom';
-import Home from './components/Home';
+import React from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/Home/Home";
+import Contacts from "./components/Contacts/Contacts";
+import AboutMe from "./components/About/AboutMe";
 
-function App() {
+export default function App() {
   return (
     <React.Fragment>
-      <NavBar/>
-      <Switch>
-        <Route exact path = "/" component = {Home}/>
-      </Switch>
+      <NavBar />
+      <div className="app_layout">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/reach out to me" component={Contacts} />
+          <Route path = "/about thenya" component = {AboutMe} />
+        </Switch>
+      </div>
     </React.Fragment>
   );
 }
-
-export default App;

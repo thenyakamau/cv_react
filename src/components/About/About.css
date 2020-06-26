@@ -1,0 +1,92 @@
+.about_layout {
+    background: white;
+}
+
+.about_container {
+    display: flex;
+}
+
+.about_links {
+    margin-top: 100px;
+    height: 100%;
+    flex: 0.5;
+}
+
+.about_image {
+    display: block;
+}
+
+.about_image {
+    height: 30vh;
+    width: 80%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.about_image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.about_body {
+    margin-top: 100px;
+    flex: 1;
+}
+
+.about_body h2 {
+    text-align: center;
+    text-transform: uppercase;
+    color: teal;
+}
+
+.about_body p {
+    text-indent: 30px;
+    color: grey;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.about_social_buttons {
+    display: flex;
+    margin-top: 10px;
+    color: grey;
+    margin-left: 20px;
+}
+
+.about_social_buttons a {
+    text-decoration: none;
+    color: grey;
+}
+
+.about_social_buttons i {
+    margin-right: 25px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.about_social_buttons i:hover {
+    color: teal;
+}
+
+.about_worked_at {
+    margin-top: 10px;
+    width: 80%;
+}
+
+.about_worked_at a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.about_worked_for {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.about_worked_for_title label {
+    margin-left: 20px;
+    cursor: pointer;
+}
