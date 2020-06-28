@@ -5,9 +5,9 @@ export default class Descriptions extends Component {
     return (
       <div className="description_layout">
         <section className="use_sasu padding_top">
-          <div class="description_layout_container">
-            <div class="single_feature">
-              <div class="single_feature_part">
+          <div className="description_layout_container">
+            <div className="single_feature">
+              <div className="single_feature_part">
                 <center>
                   <img src="assets/icons/flutter.png" alt="" />
                   <h4>Mobile development</h4>
@@ -19,8 +19,8 @@ export default class Descriptions extends Component {
                 </p>
               </div>
             </div>
-            <div class="single_feature">
-              <div class="single_feature_part">
+            <div className="single_feature">
+              <div className="single_feature_part">
                 <center>
                   <img src="assets/icons/javascript.png" alt="" />
                   <h4>Web Development</h4>
@@ -32,8 +32,8 @@ export default class Descriptions extends Component {
                 </p>
               </div>
             </div>
-            <div class="single_feature">
-              <div class="single_feature_part">
+            <div className="single_feature">
+              <div className="single_feature_part">
                 <center>
                   <img src="assets/icons/nodejs.png" alt="" />
                   <h4>Server-Side Development</h4>

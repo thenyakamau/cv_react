@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-let Base_Url = "/";
+let Base_Url = "/api/v1/transactions/";
 
 export function AxiosPostData(type, userData) {
 

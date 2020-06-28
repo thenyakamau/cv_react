@@ -5,7 +5,15 @@ import PhoneAndroidOutlinedIcon from "@material-ui/icons/PhoneAndroidOutlined";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import Button from "@material-ui/core/Button";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import { AxiosMultiPartPostData } from "../../services/AxiosConfig";
+import { AxiosPostData } from "../../services/AxiosConfig";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import Slide from "@material-ui/core/Slide";
+import SimpleBackdrop from "../../widgets/SimpleBackDrop";
+
+function TransitionLeft(props) {
+  return <Slide {...props} direction="left" />;
+}
 
 export default class Contacts extends Component {
   constructor(props) {
@@ -15,9 +23,14 @@ export default class Contacts extends Component {
       email: "",
       message: "",
       number: "",
+      openSnackBar: false,
+      error: false,
+      responseMessage: "",
+      loading: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onReview = this.onReview.bind(this);
+    this.closeSnackBar = this.closeSnackBar.bind(this);
   }
 
   onChange(e) {
@@ -25,28 +38,52 @@ export default class Contacts extends Component {
   }
 
   onReview(e) {
-    const { name, email, message, mumber } = this.state;
+    const { name, email, message, number } = this.state;
 
-    if (name && email && message && mumber) {
-      let formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("message", message);
-      formData.append("number", mumber);
-      AxiosMultiPartPostData("ContactUs", formData)
+    if (name && email && message && number) {
+      this.setState({ loading: true });
+      AxiosPostData("", {name, email, message, number})
         .then((result) => {
-          //let responseJson = result.data;
+          let responseJson = result.data;
+          this.setState({
+            responseMessage: responseJson.message,
+            openSnackBar: true,
+            loading: false,
+            error: false,
+            name: "",
+            email: "",
+            number: "",
+            message: "",
+          });
         })
         .catch((error) => {
-          console.log(error);
+          this.setState({
+            responseMessage: "Something went wrong",
+            openSnackBar: true,
+            loading: false,
+            error: true,
+          });
         });
     }
   }
 
+  closeSnackBar(e) {
+    this.setState({ openSnackBar: false });
+  }
+
   render() {
-    const { name, email, message, number } = this.state;
+    const {
+      name,
+      email,
+      message,
+      number,
+      error,
+      responseMessage,
+      openSnackBar,
+    } = this.state;
     return (
       <div>
+        <SimpleBackdrop open={this.state.loading} />
         <div className="contact_img">
           <img src="assets/icons/contact_image.webp" alt="" />
         </div>
@@ -61,8 +98,8 @@ export default class Contacts extends Component {
               rows="9"
               value={message}
               onChange={this.onChange}
-              onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Enter Message'"
+              onFocus="this.placeholder = ''"
+              onBlur="this.placeholder = 'Enter Message'"
               placeholder="Enter Message"
             ></textarea>
             <div className="contact_section_body_details">
@@ -73,8 +110,8 @@ export default class Contacts extends Component {
                 type="text"
                 value={name}
                 onChange={this.onChange}
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Enter your name'"
+                onFocus="this.placeholder = ''"
+                onBlur="this.placeholder = 'Enter your name'"
                 placeholder="Enter your name"
               />
               <input
@@ -84,8 +121,8 @@ export default class Contacts extends Component {
                 type="email"
                 value={email}
                 onChange={this.onChange}
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Enter your email'"
+                onFocus="this.placeholder = ''"
+                onBlur="this.placeholder = 'Enter your email'"
                 placeholder="Enter your email"
               />
               <input
@@ -95,8 +132,8 @@ export default class Contacts extends Component {
                 type="text"
                 value={number}
                 onChange={this.onChange}
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Enter your phone number'"
+                onFocus="this.placeholder = ''"
+                onBlur="this.placeholder = 'Enter your phone number'"
                 placeholder="Enter your phone number"
               />
               <Button
@@ -139,6 +176,23 @@ export default class Contacts extends Component {
             </div>
           </div>
         </div>
+        <Snackbar
+          open={openSnackBar}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          onClose={this.closeSnackBar}
+          autoHideDuration={6000}
+          TransitionComponent={TransitionLeft}
+        >
+          {error === true ? (
+            <Alert onClose={this.closeSnackBar} severity="error">
+              {responseMessage}
+            </Alert>
+          ) : (
+            <Alert onClose={this.closeSnackBar} severity="success">
+              {responseMessage}
+            </Alert>
+          )}
+        </Snackbar>
       </div>
     );
   }
