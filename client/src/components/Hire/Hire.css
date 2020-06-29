@@ -1,0 +1,44 @@
+.hire_layout {
+    background: white;
+}
+
+.hire_details {
+    display: flex;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+
+.hire_body {
+    margin-top: 100px;
+}
+
+.hire_body p {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: 100px;
+    margin-left: 50px;
+    text-indent: 50px;
+    text-align: justify;
+}
+
+.hire_details_image {
+    margin-top: 100px;
+    height: 40vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hire_details_image img {
+    height: 100%;
+    width: 70%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hire_details_buttons {
+    justify-content: space-evenly;
+    width: 50%;
+    display: flex;
+}

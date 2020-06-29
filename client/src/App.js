@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import Contacts from "./components/Contacts/Contacts";
 import AboutMe from "./components/About/AboutMe";
+import HireMe from "./components/Hire/HireMe";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route path="/reach out to me" component={Contacts} />
           <Route path = "/about thenya" component = {AboutMe} />
+          <Route path = "/hire thenya" component = {HireMe} />
         </Switch>
       </div>
     </React.Fragment>

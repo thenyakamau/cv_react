@@ -20,6 +20,9 @@ export default class NavBar extends Component {
                   <Link to="/reach out to me">Contact Me</Link>
                 </li>
                 <li>
+                  <Link to="/hire thenya">Hire Me</Link>
+                </li>
+                <li>
                   <Link to="/about thenya">About Me</Link>
                 </li>
                 <li>
