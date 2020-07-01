@@ -8,7 +8,7 @@ function TransitionLeft(props) {
   }
   
 
-export function CustomSnackBar(props) {
+export default function CustomSnackBar(props) {
     const {values, closeSnackBar} = props
     return(
         <Snackbar

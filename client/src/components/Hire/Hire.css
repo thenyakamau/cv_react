@@ -230,6 +230,41 @@
     color: grey;
 }
 
+.lance_img {
+    height: 100px;
+    overflow: hidden;
+}
+
+.lance_img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.lance_objects {
+    height: 100%;
+    display: grid;
+    grid-gap: 30px;
+}
+
+.lance_objects section {
+    height: 100%;
+    grid-column: 3 / span 12;
+    display: grid;
+    margin-right: 20px;
+    grid-template-columns: repeat( 12, minmax(auto, 40px));
+    grid-gap: 30px;
+}
+
+.lance_objects .card {
+    grid-column-end: span 4;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    height: 100%;
+}
+
 @media screen and (max-width: 900px) {
     .hire_job_image {
         display: none;

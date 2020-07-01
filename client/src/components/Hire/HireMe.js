@@ -2,9 +2,36 @@ import React, { Component } from "react";
 import "./Hire.css";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import FreeLancingDialog from "./FreeLancingDialog";
 
 export default class HireMe extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      openDialog: false,
+    }
+    this.formControl = this.formControl.bind(this);
+    this.onDialogChange = this.onDialogChange.bind(this);
+  }
+
+  onDialogChange(values) {
+    this.formControl();
+    //this.setState({ description: values });
+  }
+
+  formControl() {
+    const { openDialog } = this.state;
+
+    if (openDialog === true) {
+      this.setState({ openDialog: false });
+    } else {
+      this.setState({ openDialog: true });
+    }
+  }
+
   render() {
+    const {openDialog } = this.state;
     return (
       <div className="hire_layout">
         <div className="hire_details">
@@ -58,7 +85,7 @@ export default class HireMe extends Component {
             </p>
 
             <div className="hire_details_buttons">
-              <Button variant="outlined" color="primary" size="large">
+              <Button variant="outlined" color="primary" size="large" onClick = {this.formControl}>
                 Book Me
               </Button>
               <Button
@@ -71,6 +98,7 @@ export default class HireMe extends Component {
             </div>
           </div>
         </div>
+        <FreeLancingDialog openDialog = {openDialog} formControl = {this.formControl} onDialogChange = {this.onDialogChange}/>
       </div>
     );
   }

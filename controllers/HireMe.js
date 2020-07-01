@@ -1,9 +1,8 @@
-const Contact = require("../models/ContactMe");
+const JobRequests = require("../models/HireMe");
 
-//add contact messages
-async function saveMessages(req, res, next) {
+async function saveJobRequest(req, res, next) {
   try {
-    await Contact.create(req.body);
+    await JobRequests.create(req.body);
     return res.status(200).json({
       success: true,
       message: "Your message has been received i will get back to you soon",
@@ -24,4 +23,4 @@ async function saveMessages(req, res, next) {
   }
 }
 
-exports.saveMessages = saveMessages;
+exports.saveJobRequest = saveJobRequest;

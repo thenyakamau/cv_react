@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
 import "./Hire.css";
 import HireDialog from "./HireDialog";
 import { AxiosPostData } from "../../services/AxiosConfig";
-import { CustomSnackBar } from "../../widgets/MySnackBar";
-import { CustomAlertDialog } from "../../widgets/MyAlertDialog";
+import CustomDialog from "../../widgets/MyDialog";
+import CustomSnackBar from "../../widgets/MySnackBar";
+import CustomAlertDialog from "../../widgets/MyAlertDialog";
 
 export default class HireJob extends Component {
   constructor(props) {
@@ -14,9 +15,11 @@ export default class HireJob extends Component {
       loading: "",
       responseMessage: "",
       openDialog: false,
-      error: '',
+      error: "",
       openSnackBar: false,
+      openSuccessDialog: false,
       snackPostion: { vertical: "bottom", horizontal: "center" },
+      redirectPage: false,
       name: "",
       email: "",
       number: "",
@@ -26,12 +29,13 @@ export default class HireJob extends Component {
     this.onChange = this.onChange.bind(this);
     this.onDialogChange = this.onDialogChange.bind(this);
     this.closeSnackBar = this.closeSnackBar.bind(this);
+    this.closeSuccessDialog = this.closeSuccessDialog.bind(this);
     this.saveJobApplication = this.saveJobApplication.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    this.setState({error: ''});
+    this.setState({ error: "" });
   }
 
   onDialogChange(values) {
@@ -53,13 +57,17 @@ export default class HireJob extends Component {
     this.setState({ openSnackBar: false });
   }
 
+  closeSuccessDialog(e) {
+    this.setState({ openSuccessDialog: false, redirectPage: true });
+  }
+
   saveJobApplication(e) {
-    this.setState({error: ''});
+    this.setState({ error: "" });
     const { name, email, number, description } = this.state;
     const body = { name, email, number, description };
     if (name && email && number && description) {
       this.setState({ loading: true });
-      AxiosPostData("", body)
+      AxiosPostData("job", body)
         .then((result) => {
           let responseJson = result.data;
           this.setState({
@@ -67,10 +75,7 @@ export default class HireJob extends Component {
             openSnackBar: true,
             loading: false,
             error: false,
-            name: "",
-            email: "",
-            number: "",
-            description: {},
+            openSuccessDialog: true,
           });
         })
         .catch((error) => {
@@ -81,8 +86,11 @@ export default class HireJob extends Component {
             error: true,
           });
         });
-    }else {
-        this.setState({error : "warning", responseMessage : "Please input all necessary fields"})
+    } else {
+      this.setState({
+        error: "warning",
+        responseMessage: "Please input all necessary fields",
+      });
     }
   }
 
@@ -95,8 +103,25 @@ export default class HireJob extends Component {
       openSnackBar,
       error,
       snackPostion,
+      name,
+      email,
+      number,
+      openSuccessDialog,
+      redirectPage
     } = this.state;
     const snackValues = { error, responseMessage, openSnackBar, snackPostion };
+    const dialogValues = { responseMessage, openSuccessDialog, error };
+
+    if (redirectPage) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/hire thenya",
+            state: { from: this.props.location.state },
+          }}
+        />
+      );
+    }
 
     return (
       <div className="hire_job_layout">
@@ -114,7 +139,10 @@ export default class HireJob extends Component {
             <div className="input_container">
               <h2>Hire Job</h2>
               <br />
-              <CustomAlertDialog error = {error} responseMessage = {responseMessage} />
+              <CustomAlertDialog
+                error={error}
+                responseMessage={responseMessage}
+              />
               <div className="login_input-div one">
                 <div className="i">
                   <i className="fas fa-user"></i>
@@ -128,6 +156,8 @@ export default class HireJob extends Component {
                     name="name"
                     required
                     autocomplete="name"
+                    value={name}
+                    onChange={this.onChange}
                     autofocus
                   />
                 </div>
@@ -146,6 +176,8 @@ export default class HireJob extends Component {
                     name="email"
                     required
                     autocomplete="email"
+                    value={email}
+                    onChange={this.onChange}
                     autofocus
                   />
                 </div>
@@ -164,6 +196,8 @@ export default class HireJob extends Component {
                     name="number"
                     required
                     autocomplete="number"
+                    value={number}
+                    onChange={this.onChange}
                     autofocus
                   />
                 </div>
@@ -204,6 +238,10 @@ export default class HireJob extends Component {
         <CustomSnackBar
           values={snackValues}
           closeSnackBar={this.closeSnackBar}
+        />
+        <CustomDialog
+          values={dialogValues}
+          handleClose={this.closeSuccessDialog}
         />
       </div>
     );

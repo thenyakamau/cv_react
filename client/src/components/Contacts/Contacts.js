@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { AxiosPostData } from "../../services/AxiosConfig";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
-import { CustomSnackBar } from "../../widgets/MySnackBar";
+import CustomSnackBar from "../../widgets/MySnackBar";
 
 export default class Contacts extends Component {
   constructor(props) {

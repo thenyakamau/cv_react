@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CustomAlertDialog(props) {
+export default function CustomAlertDialog(props) {
 
     const {error, responseMessage} = props;
 
