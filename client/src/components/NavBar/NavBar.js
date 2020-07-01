@@ -17,13 +17,13 @@ export default class NavBar extends Component {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/reach out to me">Contact Me</Link>
+                  <Link to="/reach out to me">Contact</Link>
                 </li>
                 <li>
-                  <Link to="/hire thenya">Hire Me</Link>
+                  <Link to="/hire thenya">Hire</Link>
                 </li>
                 <li>
-                  <Link to="/about thenya">About Me</Link>
+                  <Link to="/about thenya">About</Link>
                 </li>
                 <li>
                   <a href="assets/utils/thenya cv.docx" download>

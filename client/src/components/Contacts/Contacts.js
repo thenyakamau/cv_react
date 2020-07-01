@@ -6,14 +6,8 @@ import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import Button from "@material-ui/core/Button";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { AxiosPostData } from "../../services/AxiosConfig";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import Slide from "@material-ui/core/Slide";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
-
-function TransitionLeft(props) {
-  return <Slide {...props} direction="left" />;
-}
+import { CustomSnackBar } from "../../widgets/MySnackBar";
 
 export default class Contacts extends Component {
   constructor(props) {
@@ -27,6 +21,7 @@ export default class Contacts extends Component {
       error: false,
       responseMessage: "",
       loading: false,
+      snackPostion:  { vertical: "bottom", horizontal: "center" },
     };
     this.onChange = this.onChange.bind(this);
     this.onReview = this.onReview.bind(this);
@@ -80,7 +75,9 @@ export default class Contacts extends Component {
       error,
       responseMessage,
       openSnackBar,
+      snackPostion
     } = this.state;
+    const snackValues = {error, responseMessage, openSnackBar, snackPostion};
     return (
       <div>
         <SimpleBackdrop open={this.state.loading} />
@@ -176,23 +173,8 @@ export default class Contacts extends Component {
             </div>
           </div>
         </div>
-        <Snackbar
-          open={openSnackBar}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          onClose={this.closeSnackBar}
-          autoHideDuration={6000}
-          TransitionComponent={TransitionLeft}
-        >
-          {error === true ? (
-            <Alert onClose={this.closeSnackBar} severity="error">
-              {responseMessage}
-            </Alert>
-          ) : (
-            <Alert onClose={this.closeSnackBar} severity="success">
-              {responseMessage}
-            </Alert>
-          )}
-        </Snackbar>
+      
+        <CustomSnackBar values = {snackValues} closeSnackBar ={this.closeSnackBar}/>
       </div>
     );
   }

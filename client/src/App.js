@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Contacts from "./components/Contacts/Contacts";
 import AboutMe from "./components/About/AboutMe";
 import HireMe from "./components/Hire/HireMe";
+import HireJob from "./components/Hire/HireJob";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/reach out to me" component={Contacts} />
           <Route path = "/about thenya" component = {AboutMe} />
           <Route path = "/hire thenya" component = {HireMe} />
+          <Route path = "/hire for job" component = {HireJob} />
         </Switch>
       </div>
     </React.Fragment>
