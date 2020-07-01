@@ -4,34 +4,39 @@ import SimpleBackdrop from "../../widgets/SimpleBackDrop";
 import "./Hire.css";
 import HireDialog from "./HireDialog";
 import { AxiosPostData } from "../../services/AxiosConfig";
+import { CustomSnackBar } from "../../widgets/MySnackBar";
+import { CustomAlertDialog } from "../../widgets/MyAlertDialog";
 
 export default class HireJob extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: "",
-      returnMessage: "",
+      responseMessage: "",
       openDialog: false,
-      error: false,
+      error: '',
       openSnackBar: false,
+      snackPostion: { vertical: "bottom", horizontal: "center" },
       name: "",
       email: "",
-      p_number: "",
+      number: "",
       description: {},
     };
     this.formControl = this.formControl.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onDialogChange = this.onDialogChange.bind(this);
+    this.closeSnackBar = this.closeSnackBar.bind(this);
     this.saveJobApplication = this.saveJobApplication.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+    this.setState({error: ''});
   }
 
   onDialogChange(values) {
     this.formControl();
-    this.setState({description: values});
+    this.setState({ description: values });
   }
 
   formControl() {
@@ -44,67 +49,54 @@ export default class HireJob extends Component {
     }
   }
 
+  closeSnackBar(e) {
+    this.setState({ openSnackBar: false });
+  }
+
   saveJobApplication(e) {
-      const {name, email, p_number, description} = this.state;
-      const body = {name, email, p_number, description};
-      if(name && email && p_number && description) {
-          this.setState({loading: true});
-          AxiosPostData('', body)
-          .then((result)=>{
-            let responseJson = result.data;
-            this.setState({
-              returnMessage: responseJson.message,
-              openSnackBar: true,
-              loading: false,
-              error: false,
-              name: "",
-              email: "",
-              number: "",
-              message: "",
-            });
-          })
-      }
+    this.setState({error: ''});
+    const { name, email, number, description } = this.state;
+    const body = { name, email, number, description };
+    if (name && email && number && description) {
+      this.setState({ loading: true });
+      AxiosPostData("", body)
+        .then((result) => {
+          let responseJson = result.data;
+          this.setState({
+            responseMessage: responseJson.message,
+            openSnackBar: true,
+            loading: false,
+            error: false,
+            name: "",
+            email: "",
+            number: "",
+            description: {},
+          });
+        })
+        .catch((error) => {
+          this.setState({
+            responseMessage: "Something went wrong",
+            openSnackBar: true,
+            loading: false,
+            error: true,
+          });
+        });
+    }else {
+        this.setState({error : "warning", responseMessage : "Please input all necessary fields"})
+    }
   }
 
   render() {
-    const { returnMessage, openDialog, loading , description} = this.state;
-    let myAlertDialog;
-    if (returnMessage === "success") {
-      myAlertDialog = (
-        <div data-form-alert="true">
-          <div
-            data-form-alert-success="true"
-            className="alert alert-form alert-success text-xs-center"
-          >
-            Thanks for reaching out! We'll get back to you soon
-          </div>
-        </div>
-      );
-    } else if (returnMessage === "error") {
-      myAlertDialog = (
-        <div data-form-alert="true">
-          <div
-            data-form-alert-success="true"
-            className="alert alert-form alert-danger text-xs-center"
-          >
-            Please check your credentials
-          </div>
-        </div>
-      );
-    } else if (returnMessage === "warning") {
-      myAlertDialog = (
-        <div data-form-alert="true">
-          <div
-            data-form-alert-success="true"
-            className="alert alert-form alert-warning text-xs-center"
-          >
-            Please input all necessary fields
-          </div>
-        </div>
-      );
-    } else {
-      myAlertDialog = <div></div>;
-    }
+    const {
+      responseMessage,
+      openDialog,
+      loading,
+      description,
+      openSnackBar,
+      error,
+      snackPostion,
+    } = this.state;
+    const snackValues = { error, responseMessage, openSnackBar, snackPostion };
 
     return (
       <div className="hire_job_layout">
@@ -122,7 +114,7 @@ export default class HireJob extends Component {
             <div className="input_container">
               <h2>Hire Job</h2>
               <br />
-              {myAlertDialog}
+              <CustomAlertDialog error = {error} responseMessage = {responseMessage} />
               <div className="login_input-div one">
                 <div className="i">
                   <i className="fas fa-user"></i>
@@ -165,11 +157,11 @@ export default class HireJob extends Component {
                 </div>
                 <div className="div">
                   <input
-                    id="p_number"
+                    id="number"
                     placeholder="Phone Number"
                     type="text"
-                    className="input @error('p_number') is-invalid @enderror"
-                    name="p_number"
+                    className="input @error('number') is-invalid @enderror"
+                    name="number"
                     required
                     autocomplete="number"
                     autofocus
@@ -188,18 +180,31 @@ export default class HireJob extends Component {
                     name="job"
                     required
                     autofocus
-                    value = {description.description}
+                    value={description.description}
                     onChange={this.formControl}
                     onClick={this.formControl}
                   />
                 </div>
               </div>
 
-              <input type="submit" className="btn_login" value="Hire Now" onClick = {this.saveJobApplication}/>
+              <input
+                type="submit"
+                className="btn_login"
+                value="Hire Now"
+                onClick={this.saveJobApplication}
+              />
             </div>
           </div>
         </div>
-        <HireDialog openDialog={openDialog} formControl={this.formControl} onDialogChange = {this.onDialogChange}/>
+        <HireDialog
+          openDialog={openDialog}
+          formControl={this.formControl}
+          onDialogChange={this.onDialogChange}
+        />
+        <CustomSnackBar
+          values={snackValues}
+          closeSnackBar={this.closeSnackBar}
+        />
       </div>
     );
   }

@@ -18,7 +18,7 @@ export default class Contacts extends Component {
       message: "",
       number: "",
       openSnackBar: false,
-      error: false,
+      error: '',
       responseMessage: "",
       loading: false,
       snackPostion:  { vertical: "bottom", horizontal: "center" },
@@ -59,6 +59,8 @@ export default class Contacts extends Component {
             error: true,
           });
         });
+    }else {
+
     }
   }
 
@@ -75,12 +77,13 @@ export default class Contacts extends Component {
       error,
       responseMessage,
       openSnackBar,
-      snackPostion
+      snackPostion,
+      loading
     } = this.state;
     const snackValues = {error, responseMessage, openSnackBar, snackPostion};
     return (
       <div>
-        <SimpleBackdrop open={this.state.loading} />
+        <SimpleBackdrop open={loading} />
         <div className="contact_img">
           <img src="assets/icons/contact_image.webp" alt="" />
         </div>
@@ -173,7 +176,6 @@ export default class Contacts extends Component {
             </div>
           </div>
         </div>
-      
         <CustomSnackBar values = {snackValues} closeSnackBar ={this.closeSnackBar}/>
       </div>
     );
