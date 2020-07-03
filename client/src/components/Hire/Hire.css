@@ -224,6 +224,10 @@
     text-decoration: underline;
 }
 
+.hire_job_container h2 {
+    text-transform: capitalize;
+}
+
 .hire_job_container h3 {
     font-weight: 600;
     text-align: center;
@@ -245,6 +249,10 @@
     height: 100%;
     display: grid;
     grid-gap: 30px;
+}
+
+.lance_objects_name {
+    text-transform: capitalize;
 }
 
 .lance_objects section {

@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
-import "./Hire.css";
 import HireDialog from "./HireDialog";
 import { AxiosPostData } from "../../services/AxiosConfig";
 import CustomDialog from "../../widgets/MyDialog";
-import CustomSnackBar from "../../widgets/MySnackBar";
 import CustomAlertDialog from "../../widgets/MyAlertDialog";
 
 export default class HireJob extends Component {
@@ -16,10 +13,7 @@ export default class HireJob extends Component {
       responseMessage: "",
       openDialog: false,
       error: "",
-      openSnackBar: false,
       openSuccessDialog: false,
-      snackPostion: { vertical: "bottom", horizontal: "center" },
-      redirectPage: false,
       name: "",
       email: "",
       number: "",
@@ -28,7 +22,6 @@ export default class HireJob extends Component {
     this.formControl = this.formControl.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onDialogChange = this.onDialogChange.bind(this);
-    this.closeSnackBar = this.closeSnackBar.bind(this);
     this.closeSuccessDialog = this.closeSuccessDialog.bind(this);
     this.saveJobApplication = this.saveJobApplication.bind(this);
   }
@@ -53,12 +46,10 @@ export default class HireJob extends Component {
     }
   }
 
-  closeSnackBar(e) {
-    this.setState({ openSnackBar: false });
-  }
-
   closeSuccessDialog(e) {
-    this.setState({ openSuccessDialog: false, redirectPage: true });
+    this.setState({ openSuccessDialog: false });
+    const { nextPage } = this.props;
+    nextPage(0);
   }
 
   saveJobApplication(e) {
@@ -72,7 +63,6 @@ export default class HireJob extends Component {
           let responseJson = result.data;
           this.setState({
             responseMessage: responseJson.message,
-            openSnackBar: true,
             loading: false,
             error: false,
             openSuccessDialog: true,
@@ -81,7 +71,6 @@ export default class HireJob extends Component {
         .catch((error) => {
           this.setState({
             responseMessage: "Something went wrong",
-            openSnackBar: true,
             loading: false,
             error: true,
           });
@@ -100,28 +89,14 @@ export default class HireJob extends Component {
       openDialog,
       loading,
       description,
-      openSnackBar,
       error,
-      snackPostion,
       name,
       email,
       number,
       openSuccessDialog,
-      redirectPage
     } = this.state;
-    const snackValues = { error, responseMessage, openSnackBar, snackPostion };
     const dialogValues = { responseMessage, openSuccessDialog, error };
-
-    if (redirectPage) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/hire thenya",
-            state: { from: this.props.location.state },
-          }}
-        />
-      );
-    }
+    const { nextPage } = this.props;
 
     return (
       <div className="hire_job_layout">
@@ -130,9 +105,9 @@ export default class HireJob extends Component {
           <div className="hire_job_image">
             <img src="assets/icons/hire_job.webp" alt="" />
             <div className="url_link">
-              <Link className="url_label" to="/hire thenya">
+              <label className="url_label" onClick={() => nextPage(0)}>
                 Go Back
-              </Link>
+              </label>
             </div>
           </div>
           <div className="hire_job_container">
@@ -234,10 +209,6 @@ export default class HireJob extends Component {
           openDialog={openDialog}
           formControl={this.formControl}
           onDialogChange={this.onDialogChange}
-        />
-        <CustomSnackBar
-          values={snackValues}
-          closeSnackBar={this.closeSnackBar}
         />
         <CustomDialog
           values={dialogValues}
