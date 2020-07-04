@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import MenuItem from "@material-ui/core/MenuItem";
 import RemoveDuplicates from "../../utils/RemoveArrayDuplicates";
+import CustomAlertDialog from "../../widgets/MyAlertDialog";
 
 function PaperComponent(props) {
   return (
@@ -24,25 +25,21 @@ function PaperComponent(props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   textField: {
     margin: 8,
   },
-  selectText: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-}));
+});
 
 export default function LanceDialog(props) {
-  const { openDialog, formControl, lanceJob } = props;
-  const [job, setJob] = useState("");
+  const { openDialog, formControl, lanceJob, inputDescription } = props;
   const [professionality, setProfessionality] = useState("");
-  const [type, setType] = useState("");
+  const [server, setServer] = useState("");
   const [salary, setSalary] = useState(0);
   const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
+  const [timeline, setTimeline] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
 
   const classes = useStyles();
 
@@ -54,11 +51,77 @@ export default function LanceDialog(props) {
   }
 
   let reducedLevel = RemoveDuplicates(level);
-  let selectServer = [{"label":"true", "value": true}, {"label":"false", "value": false}];
+  let selectServer = [
+    { label: "true", value: true },
+    { label: "false", value: false },
+  ];
+
+  let selectUrgency = ["1 month", "2 months", "3 months"];
+
+  function enterProfessionValue(e) {
+    setServer("");
+    setSalary("");
+    setError("");
+    setResponseMessage("");
+    setProfessionality(e.target.value);
+  }
+
+  function enterServerValues(e) {
+    setServer(e.target.value);
+    setError("");
+    setResponseMessage("");
+    if (professionality) {
+      for (let index = 0; index < decodedProfession.length; index++) {
+        const element = decodedProfession[index];
+        switch (professionality) {
+          case "starter":
+            if (professionality === element.level) {
+              if (e.target.value === true) {
+                if (element.server === true) return setSalary(element.cost);
+              } else {
+                console.log(element.server);
+                if (element.server === false) return setSalary(element.cost);
+              }
+            }
+            break;
+
+          case "professional":
+            if (professionality === element.level) {
+              if (e.target.value === true) {
+                if (element.server === true) return setSalary(element.cost);
+              } else {
+                if (element.server === false) return setSalary(element.cost);
+              }
+            }
+            break;
+
+          default:
+            setError("warning");
+            setResponseMessage("Set profession level first");
+        }
+      }
+    } else {
+      setError("warning");
+      setResponseMessage("Set profession level first");
+    }
+  }
 
   function saveDescriptions(e) {
-    // const values = { job, locality, type, salary, description };
-    // onDialogChange(values);
+    if (professionality && salary && timeline) {
+      let response = {
+        j_name: lanceJob.type,
+        professionality: professionality,
+        server: server,
+        salary: salary,
+        timeline: timeline,
+        availability: lanceJob.available,
+        description: description,
+      };
+      inputDescription(response);
+    } else {
+      setError("warning");
+      setResponseMessage("Please input all necessary fields");
+    }
   }
 
   return (
@@ -75,6 +138,7 @@ export default function LanceDialog(props) {
         <DialogContentText>
           This entails both the website and app
         </DialogContentText>
+        <CustomAlertDialog error={error} responseMessage={responseMessage} />
         <TextField
           className={classes.textField}
           autoFocus
@@ -85,14 +149,14 @@ export default function LanceDialog(props) {
           type="text"
         />
         <TextField
-          className={classes.selectText}
+          className={classes.textField}
           autoFocus
           select
           margin="dense"
           id="professionality"
           label="Select professionality"
           value={professionality}
-          onChange={(e) => setProfessionality(e.target.value)}
+          onChange={(e) => enterProfessionValue(e)}
           type="text"
           helperText="Please select your professionality"
         >
@@ -111,10 +175,10 @@ export default function LanceDialog(props) {
           margin="dense"
           id="server"
           label="Server support"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
+          value={server}
+          onChange={(e) => enterServerValues(e)}
           type="text"
-          helperText="Please select your professionality"
+          helperText="Please select your server options"
         >
           {selectServer.map((server, index) => {
             return (
@@ -136,15 +200,46 @@ export default function LanceDialog(props) {
           id="salary"
           label="Salary"
           value={salary}
-          onChange={(e) => setSalary(e.target.value)}
           type="text"
         />
+
+        <TextField
+          className={classes.textField}
+          autoFocus
+          margin="dense"
+          id="availability"
+          label="Availability"
+          value={lanceJob.available}
+          type="text"
+        />
+
+        <TextField
+          className={classes.textField}
+          autoFocus
+          select
+          margin="dense"
+          id="server"
+          label="TimeLine"
+          value={timeline}
+          onChange={(e) => setTimeline(e.target.value)}
+          type="text"
+          helperText="Please select your timeline"
+        >
+          {selectUrgency.map((urgency, index) => {
+            return (
+              <MenuItem key={index} value={urgency}>
+                {urgency}
+              </MenuItem>
+            );
+          })}
+        </TextField>
+
         <TextField
           className={classes.textField}
           autoFocus
           margin="dense"
           id="Description"
-          label="Job Description"
+          label="Job specifications (Optional)"
           type="text"
           multiline
           value={description}

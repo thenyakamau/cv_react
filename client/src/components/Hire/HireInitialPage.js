@@ -7,7 +7,7 @@ import SimpleBackdrop from "../../widgets/SimpleBackDrop";
 export default function HireInitialPage(props) {
   const { nextPage , selectedLanceJob} = props;
   const [openDialog, setOpenDialog] = useState(false);
-  const {transactionCost, getTransactionCost, loading} = useContext(HireContext);
+  const {getTransactionCost, loading} = useContext(HireContext);
 
   useEffect(() => {
     getTransactionCost();

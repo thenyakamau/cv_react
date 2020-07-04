@@ -1,17 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
 import CustomDialog from "../../widgets/MyDialog";
 import CustomAlertDialog from "../../widgets/MyAlertDialog";
-import { HireContext } from "../../context/HireState";
 import LanceDialog from "./LanceDialog";
-
+import { AxiosPostData } from "../../services/AxiosConfig";
 
 //! I could have used a class component here and made my life easier but its part of the practice.
 export default function FreeLancingPage(props) {
   const { nextPage, lanceJob } = props;
-  const { error, loading, responseMessage } = useContext(HireContext);
-
-  console.log(lanceJob);
+  // const { error, loading, responseMessage, createContract } = useContext(HireContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,11 +16,14 @@ export default function FreeLancingPage(props) {
   const [description, setDescription] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
-
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState();
   const dialogValues = { responseMessage, openSuccessDialog, error };
 
   function closeSuccessDialog() {
     setOpenSuccessDialog(false);
+    nextPage(0);
   }
 
   function formControl() {
@@ -34,14 +34,40 @@ export default function FreeLancingPage(props) {
     }
   }
 
-  function saveJobApplication() {}
+  function inputDescription(value) {
+    formControl();
+    setDescription(value);
+  }
+
+  async function saveJobApplication() {
+    let body = { name, email, number, description };
+
+    if (name && email && number && description) {
+      setLoading(true);
+      try {
+        const response = await AxiosPostData("saveContract", body);
+        setLoading(false);
+        setResponseMessage(response.data.message);
+        setError(false);
+        setOpenSuccessDialog(true);
+      } catch (error) {
+        setLoading(false);
+        setResponseMessage(error.response.data.error);
+        setError(true);
+        setOpenSuccessDialog(true);
+      }
+    } else {
+      setError("warning");
+      setResponseMessage("Input all Fields");
+    }
+  }
 
   return (
     <div className="hire_job_layout">
       <SimpleBackdrop open={loading} />
       <div className="hire_job_body">
         <div className="hire_job_image">
-          <img src="assets/icons/hire_lancer.webp" alt="" />
+          <img src={lanceJob.file_path} alt="" />
           <div className="url_link">
             <label className="url_label" onClick={() => nextPage(0)}>
               Go Back
@@ -127,7 +153,7 @@ export default function FreeLancingPage(props) {
                   name="job"
                   required
                   autofocus
-                  value={description.description}
+                  value={description.j_name}
                   onChange={formControl}
                   onClick={formControl}
                 />
@@ -144,7 +170,12 @@ export default function FreeLancingPage(props) {
         </div>
       </div>
       <CustomDialog values={dialogValues} handleClose={closeSuccessDialog} />
-      <LanceDialog openDialog = {openDialog} formControl = {formControl} lanceJob = {lanceJob}/>
+      <LanceDialog
+        openDialog={openDialog}
+        formControl={formControl}
+        lanceJob={lanceJob}
+        inputDescription={inputDescription}
+      />
     </div>
   );
 }

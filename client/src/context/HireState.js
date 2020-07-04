@@ -6,7 +6,7 @@ const initialState = {
   transactionCost: [],
   error: null,
   loading: true,
-  responseMessage: '',
+  responseMessage: "",
 };
 
 //create context
@@ -19,15 +19,16 @@ export function HireProvider({ children }) {
   //Actions
   async function getTransactionCost() {
     try {
-      const response = await AxiosGetData('getJobType', '');
+      const response = await AxiosGetData("getJobType", "");
       dispatch({
-        type: 'GET_TRANSACTIONS',
+        type: "GET_TRANSACTIONS",
         payload: response.data.data,
-      })
+      });
     } catch (error) {
       dispatch({
         type: "TRANSACTION_ERROR",
-        payload: error.response.data.error,
+        payload: true,
+        responseMessage: error.response.data.error,
       });
     }
   }
@@ -39,7 +40,7 @@ export function HireProvider({ children }) {
         error: state.error,
         loading: state.loading,
         responseMessage: state.responseMessage,
-        getTransactionCost
+        getTransactionCost,
       }}
     >
       {children}
