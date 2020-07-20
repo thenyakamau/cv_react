@@ -13,12 +13,24 @@ export default class AboutMe extends Component {
                 <img src="assets/images/git_image.jpeg" alt="" />
               </div>
               <div className="about_social_buttons">
-                <a href="https://www.facebook.com/james.thenya.3"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com/james_thenya"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/thenyakamau/"><i className="fab fa-instagram"></i></a>
-                <a href="https://github.com/thenyakamau"><i class="fab fa-github"></i></a>
-                <a href="https://gitlab.com/thenyakamau"><i class="fab fa-gitlab"></i></a>
-                <a href="https://linkedin.com/in/thenya-kamau-046230185"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/james.thenya.3">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/james_thenya">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/thenyakamau/">
+                  <i className="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/thenyakamau">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a href="https://gitlab.com/thenyakamau">
+                  <i class="fab fa-gitlab"></i>
+                </a>
+                <a href="https://linkedin.com/in/thenya-kamau-046230185">
+                  <i class="fab fa-linkedin"></i>
+                </a>
               </div>
               <div className="card about_worked_at">
                 <center>
