@@ -33,6 +33,10 @@ nav a {
     display: flex;
 }
 
+#nav_logo_icon {
+    display: none;
+}
+
 .nav_logo img {
     object-fit: cover;
     width: 40px;
@@ -88,8 +92,40 @@ nav a {
     color: #4facfe;
 }
 
+.nav_light_layout {
+    display: none;
+}
+
+.nav_light {
+    display: none;
+    z-index: 3;
+}
+
 @media screen and (max-width: 990px) {
+    nav {
+        justify-content: unset;
+        margin-left: 50px;
+    }
+    .main_nav {
+        display: none;
+    }
+    .nav_light_layout {
+        display: block;
+    }
+    #nav_logo_icon {
+        display: block;
+        margin-right: 30px;
+    }
     .navigation_body ul {
+        list-style: none;
+        width: 100%;
+        display: block;
+    }
+    .navigation_body ul li {
+        float: none;
+        margin-right: 10px;
+    }
+    .nav_light {
         display: none;
     }
 }

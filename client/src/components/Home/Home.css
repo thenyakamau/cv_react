@@ -14,7 +14,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
 }
 
 .canvas_background {
@@ -25,7 +24,6 @@
     background-position: center;
     background-size: cover;
     overflow: hidden;
-    z-index: 2;
 }
 
 .canvas_background .card {
@@ -35,31 +33,36 @@
     color: black;
     text-transform: capitalize;
     top: 30vh;
-    z-index: 3;
     outline: none;
     border: none;
 }
 
 .description_layout {
     margin-top: 30px;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 150px;
+    margin-right: 150px;
 }
 
 .description_layout_container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    padding-top: 20px;
+    padding-bottom: 50px;
+    gap: 60px;
 }
 
 .single_feature {
-    flex: 1;
+    /* flex: 1; */
     margin-left: 50px;
 }
 
 .single_feature p {
+    justify-items: center;
     color: #7f7f7f;
     line-height: 1.8;
     font-size: 15px;
-    text-align: center;
+    text-align: justify;
+    text-indent: 50px;
 }
 
 .call_layout {
@@ -69,9 +72,10 @@
     display: flex;
 }
 
-.about_us_text {
+
+/* .about_us_text {
     flex: 1;
-}
+} */
 
 .about_us_text img {
     margin-bottom: 10px;
@@ -137,9 +141,33 @@
     }
     .description_layout {
         margin-left: 0px;
-        margin-right: 0px;
+        margin-right: 30px;
+    }
+    .single_feature p {
+        padding: 50px;
     }
     .call_layout {
         display: block;
+    }
+}
+
+@media screen and (max-width: 8500px) {
+    .canvas_background {
+        background: url("/assets/icons/canvas_image_1_.webp");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .single_feature p {
+        padding: 0px;
+    }
+    .my_canvas {
+        height: 50vh;
     }
 }

@@ -5,15 +5,15 @@ import { HireContext } from "../../context/HireState";
 import SimpleBackdrop from "../../widgets/SimpleBackDrop";
 
 export default function HireInitialPage(props) {
-  const { nextPage , selectedLanceJob} = props;
+  const { nextPage, selectedLanceJob } = props;
   const [openDialog, setOpenDialog] = useState(false);
-  const {getTransactionCost, loading} = useContext(HireContext);
+  const { getTransactionCost, loading } = useContext(HireContext);
 
   useEffect(() => {
     getTransactionCost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   function onDialogChange(values) {
     formControl();
     selectedLanceJob(values);
@@ -29,43 +29,6 @@ export default function HireInitialPage(props) {
   return (
     <div className="hire_layout">
       <SimpleBackdrop open={loading} />
-      <div className="hire_details">
-        <div className="hire_body">
-          <center>
-            <h4>Job Hiring</h4>
-          </center>
-          <p>
-            Considering hiring me for a full time job then click the button
-            below you can also check the fields that i have experience in by
-            clicking the other button. i have an average of one year experience
-            as of now in the working environment i would be glad to be part of
-            your company given the chance.
-          </p>
-
-          <div className="hire_details_buttons">
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              onClick={(e)=> nextPage(1)}
-            >
-              Hire Me
-            </Button>
-
-            <Button
-              className="hire_details_button"
-              variant="outlined"
-              size="large"
-            >
-              Details
-            </Button>
-          </div>
-        </div>
-        <div className="hire_details_image">
-          <img src="assets/icons/hire_job.webp" alt="" />
-        </div>
-      </div>
-
       <div className="hire_details">
         <div className="hire_details_image">
           <img src="assets/icons/hire_lancer.webp" alt="" />
@@ -101,6 +64,44 @@ export default function HireInitialPage(props) {
           </div>
         </div>
       </div>
+
+      <div className="hire_details">
+        <div className="hire_body">
+          <center>
+            <h4>Job Hiring</h4>
+          </center>
+          <p>
+            Considering hiring me for a full time job then click the button
+            below you can also check the fields that i have experience in by
+            clicking the other button. i have an average of one year experience
+            as of now in the working environment i would be glad to be part of
+            your company given the chance.
+          </p>
+
+          <div className="hire_details_buttons">
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              onClick={(e) => nextPage(1)}
+            >
+              Hire Me
+            </Button>
+
+            <Button
+              className="hire_details_button"
+              variant="outlined"
+              size="large"
+            >
+              Details
+            </Button>
+          </div>
+        </div>
+        <div className="hire_details_image">
+          <img src="assets/icons/hire_job.webp" alt="" />
+        </div>
+      </div>
+
       <FreeLancingDialog
         openDialog={openDialog}
         formControl={formControl}
