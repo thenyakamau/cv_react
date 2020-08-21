@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Divider from "@material-ui/core/Divider";
 
 export default function NavLight(props) {
   const { menuItems } = props;
   return (
-    <div className="nav_light">
+    <div className="nav_light fixed_asset">
       <div className="navigation_body">
         <ul>
           {menuItems.map((menuItem, index) => {
             return (
               <div key={index}>
                 <li>
-                  <Link to={menuItem.link}>{menuItem.name}</Link>
+                  <Link className="nav_light_button" to={menuItem.link}>
+                    {menuItem.name}
+                  </Link>
+                  <Divider />
                 </li>
               </div>
             );

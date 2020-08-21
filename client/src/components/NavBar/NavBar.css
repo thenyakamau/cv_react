@@ -94,17 +94,25 @@ nav a {
 
 .nav_light_layout {
     display: none;
+    width: 100%;
+    height: 100%;
 }
 
 .nav_light {
     display: none;
-    z-index: 3;
+}
+
+.fixed_asset {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
 }
 
 @media screen and (max-width: 990px) {
     nav {
         justify-content: unset;
-        margin-left: 50px;
+        margin-left: 5px;
     }
     .main_nav {
         display: none;
@@ -123,9 +131,28 @@ nav a {
     }
     .navigation_body ul li {
         float: none;
-        margin-right: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        margin-right: 0px;
+        display: block;
+        align-items: center;
+        align-content: center;
     }
     .nav_light {
         display: none;
+        margin-top: 60px;
+        width: 30%;
+        height: 100%;
+        background-color: white;
+        z-index: 3;
+    }
+    .nav_light_button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .nav_light {
+        width: 50%;
     }
 }
