@@ -22,7 +22,7 @@
     "homepage": "https://github.com/thenyakamau/cv_react#readme",
     "devDependencies": {
         "concurrently": "^5.2.0",
-        "nodemon": "^2.0.4"
+        "nodemon": "^2.0.20"
     },
     "dependencies": {
         "colors": "^1.4.0",
